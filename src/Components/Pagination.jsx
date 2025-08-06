@@ -5,6 +5,7 @@ import "./Pagination.css";
 const Pagination = () => {
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentEmployees, setCurrentEmployees] = useState([]);
   const [employeesPerPage] = useState(10);
   const [error, setError] = useState(null);
 
@@ -22,9 +23,12 @@ const Pagination = () => {
     fetchEmployees();
   }, []);
 
-  const indexOfLastEmployee = currentPage * employeesPerPage;
-  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-  const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+ useEffect(() => {
+    const indexOfLastEmployee = currentPage * employeesPerPage;
+    const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
+    const current = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+    setCurrentEmployees(current);
+  }, [currentPage, employees]);
 
   const totalPages = Math.ceil(employees.length / employeesPerPage); // Calculate total pages
 
@@ -54,20 +58,23 @@ const Pagination = () => {
             <th>Role</th>
           </tr>
         </thead>
-        <tbody>
-          {currentEmployees.length === 0 ? (
-            <tr><td colSpan="4">No data</td></tr>
-          ) : (
-            currentEmployees.map((employee) => (
-              <tr key={employee.id} data-testid="employee-row">
-                <td>{employee.id}</td> {/* Ensure employee.id exists */}
-                <td>{employee.name}</td>
-                <td>{employee.email}</td>
-                <td>{employee.role}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
+       <tbody>
+  {currentEmployees.length === 0 ? (
+    <tr>
+      <td colSpan="4">No data</td>
+    </tr>
+  ) : (
+    currentEmployees.map((employee) => (
+      <tr key={employee.id} data-testid="employee-row">
+        <td>{employee.id}</td>
+        <td>{employee.name}</td>
+        <td>{employee.email}</td>
+        <td>{employee.role}</td>
+      </tr>
+    ))
+  )}
+</tbody>
+
       </table>
       <div className='pagination'>
         <button
