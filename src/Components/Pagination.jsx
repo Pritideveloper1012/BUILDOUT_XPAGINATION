@@ -43,18 +43,20 @@ const Pagination = () => {
   const totalPages = Math.ceil(employees.length / employeesPerPage);
 
   const nextPage = () => {
-    if (currentPage < totalPages) {
+  if (currentPage < totalPages) {
+    setTimeout(() => {
       setCurrentPage((prev) => prev + 1);
-      console.log(`Navigated to next page: ${currentPage + 1}`);
-    }
-  };
+    }, 0);
+  }
+};
 
-  const prevPage = () => {
-    if (currentPage > 1) {
+const prevPage = () => {
+  if (currentPage > 1) {
+    setTimeout(() => {
       setCurrentPage((prev) => prev - 1);
-      console.log(`Navigated to previous page: ${currentPage - 1}`);
-    }
-  };
+    }, 0);
+  }
+};
 
   return (
     <div className="container">
