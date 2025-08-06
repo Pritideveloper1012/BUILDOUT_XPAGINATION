@@ -29,14 +29,16 @@ const Pagination = () => {
   const totalPages = Math.ceil(employees.length / employeesPerPage); // Calculate total pages
 
   const nextPage = () => {
-    if (currentPage < totalPages) { // Ensure this condition is correct
+    if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      console.log(`Navigated to next page: ${currentPage + 1}`);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      console.log(`Navigated to previous page: ${currentPage - 1}`);
     }
   };
 
