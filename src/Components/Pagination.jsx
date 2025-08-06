@@ -55,7 +55,7 @@ const Pagination = () => {
                 </thead>
                 <tbody>
                     {currentEmployees.map((employee, index) => (
-                        <tr key={employee.id}>
+                        <tr key={employee.id} data-testid="employee-row">
                          <td>{(currentPage - 1) * 10 + index + 1}</td>
                             <td>{employee.name}</td>
                             <td>{employee.email}</td>
@@ -66,7 +66,7 @@ const Pagination = () => {
             </table>
             <div className='pagination' >
                 <button onClick={prevPage} disabled={currentPage === 1} data-testid="pagination-previous">Previous</button>
-                <span> Page {currentPage} of {Math.ceil(employees.length / employeesPerPage)} </span>
+                <span  data-testid="current-page"> Page {currentPage} of {Math.ceil(employees.length / employeesPerPage)} </span>
                 <button onClick={nextPage} disabled={currentPage === Math.ceil(employees.length / employeesPerPage)} data-testid="pagination-next">Next</button>
             </div>
         </div>
