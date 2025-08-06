@@ -15,6 +15,8 @@ const Pagination = () => {
         setEmployees(response.data);
       } catch (err) {
         setError(`Failed to fetch data: ${err.message}`);
+        alert('failed to fetch data');
+
         console.error('Fetch error:', err);
       }
     };
@@ -67,7 +69,7 @@ const Pagination = () => {
       <div className='pagination'>
         <button
           onClick={prevPage}
-          disabled={currentPage === 1 || employees.length === 0}
+          disabled={currentPage === 1}
           data-testid="pagination-previous"
         >
           Previous
