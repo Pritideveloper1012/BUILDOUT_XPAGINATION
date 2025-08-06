@@ -69,13 +69,22 @@ const Pagination = () => {
       </table>
 
       <div className="pagination">
-        <button onClick={handlePrevious} disabled={currentPage === 1}>
-          Previous
-        </button>
-        <span style={{ margin: "0 10px" }}>Page {currentPage}</span>
-        <button onClick={handleNext} disabled={currentPage === totalPages}>
-          Next
-        </button>
+        <button
+  onClick={handlePrevious}
+  disabled={employees.length === 0 || currentPage <= 1}
+  data-testid="pagination-previous"
+>
+  Previous
+</button>
+
+<button
+  onClick={handleNext}
+  disabled={employees.length === 0 || currentPage >= totalPages}
+  data-testid="pagination-next"
+>
+  Next
+</button>
+
       </div>
     </div>
   );
