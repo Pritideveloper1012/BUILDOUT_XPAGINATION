@@ -35,22 +35,23 @@ const Pagination = () => {
   const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
   const nextPage = () => {
-    setCurrentPage((prev) => {
-      const next = prev + 1;
-      return next <= totalPages ? next : prev;
-    });
-  };
+  if (currentPage < totalPages) {
+    setCurrentPage(currentPage + 1);
+  }
+};
 
-  const prevPage = () => {
-    setCurrentPage((prev) => {
-      const previous = prev - 1;
-      return previous >= 1 ? previous : prev;
-    });
-  };
+const prevPage = () => {
+  if (currentPage > 1) {
+    setCurrentPage(currentPage - 1);
+  }
+};
+
 
   return (
     <div className="container">
       {error && <p>{error}</p>}
+     
+
 
       <table border="1" cellPadding="20" cellSpacing="0">
         <thead>
