@@ -56,3 +56,7 @@ td {
   color: #008060;
   padding: 0 10px;
 }
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

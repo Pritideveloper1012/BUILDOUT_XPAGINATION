@@ -8,47 +8,50 @@ const Pagination = () => {
   const [employeesPerPage] = useState(10);
   const [error, setError] = useState(null);
 
+  // Fetch employee data on mount
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json');
+        const response = await axios.get(
+          'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json'
+        );
         setEmployees(response.data);
       } catch (err) {
         setError(`Failed to fetch data: ${err.message}`);
         alert('Failed to fetch data');
-        console.error('Fetch error:', err);
       }
     };
     fetchEmployees();
   }, []);
 
+  // Debugging current page change
   useEffect(() => {
-    console.log(`Current page is: ${currentPage}`);
+    console.log("CURRENT PAGE:", currentPage);
   }, [currentPage]);
 
+  const totalPages = Math.ceil(employees.length / employeesPerPage);
   const indexOfLastEmployee = currentPage * employeesPerPage;
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
   const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
-  const totalPages = Math.ceil(employees.length / employeesPerPage); // Calculate total pages
-
   const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      console.log(`Navigated to next page: ${currentPage + 1}`);
-    }
+    setCurrentPage((prev) => {
+      const next = prev + 1;
+      return next <= totalPages ? next : prev;
+    });
   };
 
   const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      console.log(`Navigated to previous page: ${currentPage - 1}`);
-    }
+    setCurrentPage((prev) => {
+      const previous = prev - 1;
+      return previous >= 1 ? previous : prev;
+    });
   };
 
   return (
     <div className="container">
       {error && <p>{error}</p>}
+
       <table border="1" cellPadding="20" cellSpacing="0">
         <thead>
           <tr>
@@ -64,7 +67,7 @@ const Pagination = () => {
           ) : (
             currentEmployees.map((employee) => (
               <tr key={employee.id} data-testid="employee-row">
-                <td>{employee.id}</td> {/* Ensure employee.id exists */}
+                <td>{employee.id}</td>
                 <td>{employee.name}</td>
                 <td>{employee.email}</td>
                 <td>{employee.role}</td>
@@ -73,18 +76,23 @@ const Pagination = () => {
           )}
         </tbody>
       </table>
-      <div className='pagination'>
+
+      <div className="pagination">
         <button
           onClick={prevPage}
-          disabled={currentPage === 1} // Disable if on the first page
+          disabled={currentPage === 1}
           data-testid="pagination-previous"
         >
           Previous
         </button>
-        <span data-testid="current-page">Page {currentPage} of {totalPages}</span>
+
+        <span data-testid="current-page">
+          Page {currentPage} of {totalPages}
+        </span>
+
         <button
           onClick={nextPage}
-          disabled={currentPage === totalPages} // Disable if on the last page
+          disabled={currentPage === totalPages}
           data-testid="pagination-next"
         >
           Next
