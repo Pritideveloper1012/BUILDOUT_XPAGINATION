@@ -47,6 +47,11 @@ const Pagination = () => {
   return (
     <div className="container">
       <h1>Employee Data Tables</h1>
+      {error && (
+        <div data-testid="error-message" className="error-message">
+          {error}
+        </div>
+      )}
       <table border="1" cellPadding="10" cellSpacing="0">
         <thead>
           <tr>
@@ -70,20 +75,20 @@ const Pagination = () => {
 
       <div className="pagination">
         <button
-  onClick={handlePrevious}
-  disabled={employees.length === 0 || currentPage <= 1}
-  data-testid="pagination-previous"
->
-  Previous
-</button>
+        onClick={handlePrevious}
+        disabled={employees.length === 0 || currentPage <= 1}
+        data-testid="pagination-previous"
+        >
+      Previous
+     </button>
 
-<button
-  onClick={handleNext}
-  disabled={employees.length === 0 || currentPage >= totalPages}
-  data-testid="pagination-next"
->
-  Next
-</button>
+    <button
+    onClick={handleNext}
+    disabled={employees.length === 0 || currentPage >= totalPages}
+    data-testid="pagination-next"
+    >
+    Next
+    </button>
 
       </div>
     </div>
