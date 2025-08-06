@@ -22,6 +22,10 @@ const Pagination = () => {
     fetchEmployees();
   }, []);
 
+  useEffect(() => {
+    console.log(`Current page is: ${currentPage}`);
+  }, [currentPage]);
+
   const indexOfLastEmployee = currentPage * employeesPerPage;
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
   const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
