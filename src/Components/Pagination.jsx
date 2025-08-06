@@ -25,38 +25,34 @@ const Pagination = () => {
     };
     fetchEmployees();
   }, []);
-
+const totalPages = Math.ceil(employees.length / employeesPerPage);
   // Update currentEmployees on page change
-  useEffect(() => {
-    const indexOfLastEmployee = currentPage * employeesPerPage;
-    const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
+  // Update currentEmployees on page change
+useEffect(() => {
+  const indexOfLastEmployee = currentPage * employeesPerPage;
+  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
 
-    // Delay to ensure DOM is updated before Cypress acts
-    const timeout = setTimeout(() => {
-      const current = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
-      setCurrentEmployees(current);
-    }, 0);
+  // Ensure update after render (browser sync)
+  const animation = requestAnimationFrame(() => {
+    const current = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+    setCurrentEmployees(current);
+  });
 
-    return () => clearTimeout(timeout);
-  }, [currentPage, employees]);
+  return () => cancelAnimationFrame(animation);
+}, [currentPage, employees]);
 
-  const totalPages = Math.ceil(employees.length / employeesPerPage);
-
-  const nextPage = () => {
+const nextPage = () => {
   if (currentPage < totalPages) {
-    setTimeout(() => {
-      setCurrentPage((prev) => prev + 1);
-    }, 0);
+    setCurrentPage(prev => prev + 1);
   }
 };
 
 const prevPage = () => {
   if (currentPage > 1) {
-    setTimeout(() => {
-      setCurrentPage((prev) => prev - 1);
-    }, 0);
+    setCurrentPage(prev => prev - 1);
   }
 };
+
 
   return (
     <div className="container">
