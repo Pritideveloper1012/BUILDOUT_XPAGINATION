@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import "./Pagination.css";
+import './Pagination.css';
 
 const Pagination = () => {
   const [employees, setEmployees] = useState([]);
@@ -9,7 +9,6 @@ const Pagination = () => {
   const [employeesPerPage] = useState(10);
   const [error, setError] = useState(null);
 
-  // Fetch employees
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -20,39 +19,31 @@ const Pagination = () => {
       } catch (err) {
         setError(`Failed to fetch data: ${err.message}`);
         alert('Failed to fetch data');
-        console.error('Fetch error:', err);
       }
     };
     fetchEmployees();
   }, []);
-const totalPages = Math.ceil(employees.length / employeesPerPage);
-  // Update currentEmployees on page change
-  // Update currentEmployees on page change
-useEffect(() => {
-  const indexOfLastEmployee = currentPage * employeesPerPage;
-  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
 
-  // Ensure update after render (browser sync)
-  const animation = requestAnimationFrame(() => {
+  useEffect(() => {
+    const indexOfLastEmployee = currentPage * employeesPerPage;
+    const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
     const current = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
     setCurrentEmployees(current);
-  });
+  }, [currentPage, employees]);
 
-  return () => cancelAnimationFrame(animation);
-}, [currentPage, employees]);
+  const totalPages = Math.ceil(employees.length / employeesPerPage);
 
-const nextPage = () => {
-  if (currentPage < totalPages) {
-    setCurrentPage(prev => prev + 1);
-  }
-};
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prev => prev + 1);
+    }
+  };
 
-const prevPage = () => {
-  if (currentPage > 1) {
-    setCurrentPage(prev => prev - 1);
-  }
-};
-
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prev => prev - 1);
+    }
+  };
 
   return (
     <div className="container">
@@ -72,7 +63,7 @@ const prevPage = () => {
               <td colSpan="4">No data</td>
             </tr>
           ) : (
-            currentEmployees.map((employee) => (
+            currentEmployees.map(employee => (
               <tr key={employee.id} data-testid="employee-row">
                 <td>{employee.id}</td>
                 <td>{employee.name}</td>
@@ -83,7 +74,7 @@ const prevPage = () => {
           )}
         </tbody>
       </table>
-      <div className='pagination'>
+      <div className="pagination">
         <button
           onClick={prevPage}
           aria-disabled={currentPage === 1}
