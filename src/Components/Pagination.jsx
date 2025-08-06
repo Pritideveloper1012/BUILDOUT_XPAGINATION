@@ -14,7 +14,7 @@ const Pagination = () => {
                 const response = await axios.get('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json');
                 setEmployees(response.data);
             } catch (err) {
-                setError('failed to fetch data',err);
+                setError(`Failed to fetch data: ${err.message}`);
                 alert('failed to fetch data');
                 console.error('Fetch error occurred at line X: ', err); 
             }
@@ -65,7 +65,7 @@ const Pagination = () => {
                 </tbody>
             </table>
             <div className='pagination' >
-                <button onClick={prevPage} disabled={currentPage === 1} data-testid="pagination-previous">Previous</button>
+                <button onClick={prevPage}  disabled={currentPage === 1 || employees.length === 0} data-testid="pagination-previous">Previous</button>
                 <span  data-testid="current-page"> Page {currentPage} of {Math.ceil(employees.length / employeesPerPage)} </span>
                 <button onClick={nextPage} disabled={currentPage === Math.ceil(employees.length / employeesPerPage)} data-testid="pagination-next">Next</button>
             </div>
