@@ -80,7 +80,7 @@ const Pagination = () => {
        <span data-testid="current-page">Page {currentPage} of {totalPages}</span>
         <button
           onClick={nextPage}
-          disabled={currentPage === Math.ceil(employees.length / employeesPerPage)}
+          disabled={currentPage === totalPages}
           data-testid="pagination-next"
         >
           Next
