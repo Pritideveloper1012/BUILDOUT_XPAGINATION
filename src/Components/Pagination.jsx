@@ -15,8 +15,7 @@ const Pagination = () => {
         setEmployees(response.data);
       } catch (err) {
         setError(`Failed to fetch data: ${err.message}`);
-        alert('failed to fetch data');
-
+        alert('Failed to fetch data');
         console.error('Fetch error:', err);
       }
     };
@@ -27,10 +26,10 @@ const Pagination = () => {
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
   const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
-   const totalPages = Math.ceil(employees.length / employeesPerPage);
+  const totalPages = Math.ceil(employees.length / employeesPerPage); // Calculate total pages
 
   const nextPage = () => {
-    if (currentPage < Math.ceil(employees.length / employeesPerPage)) {
+    if (currentPage < totalPages) { // Ensure this condition is correct
       setCurrentPage(currentPage + 1);
     }
   };
@@ -40,7 +39,6 @@ const Pagination = () => {
       setCurrentPage(currentPage - 1);
     }
   };
- 
 
   return (
     <div className="container">
@@ -60,7 +58,7 @@ const Pagination = () => {
           ) : (
             currentEmployees.map((employee) => (
               <tr key={employee.id} data-testid="employee-row">
-                <td>{employee.id}</td> {/* Changed from index-based numbering */}
+                <td>{employee.id}</td> {/* Ensure employee.id exists */}
                 <td>{employee.name}</td>
                 <td>{employee.email}</td>
                 <td>{employee.role}</td>
@@ -72,15 +70,15 @@ const Pagination = () => {
       <div className='pagination'>
         <button
           onClick={prevPage}
-          disabled={currentPage === 1}
+          disabled={currentPage === 1} // Disable if on the first page
           data-testid="pagination-previous"
         >
           Previous
         </button>
-       <span data-testid="current-page">Page {currentPage} of {totalPages}</span>
+        <span data-testid="current-page">Page {currentPage} of {totalPages}</span>
         <button
           onClick={nextPage}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages} // Disable if on the last page
           data-testid="pagination-next"
         >
           Next
