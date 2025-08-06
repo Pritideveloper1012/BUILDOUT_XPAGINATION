@@ -72,7 +72,8 @@ const Pagination = () => {
       <div className='pagination'>
         <button
           onClick={prevPage}
-          disabled={currentPage === 1} // Disable if on the first page
+          aria-disabled={currentPage === 1} 
+          disabled={currentPage === 1} 
           data-testid="pagination-previous"
         >
           Previous
@@ -80,7 +81,8 @@ const Pagination = () => {
         <span data-testid="current-page">Page {currentPage} of {totalPages}</span>
         <button
           onClick={nextPage}
-          disabled={currentPage === totalPages} // Disable if on the last page
+           aria-disabled={currentPage === totalPages} 
+          disabled={currentPage === totalPages} 
           data-testid="pagination-next"
         >
           Next
