@@ -27,6 +27,8 @@ const Pagination = () => {
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
   const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
+   const totalPages = Math.ceil(employees.length / employeesPerPage);
+
   const nextPage = () => {
     if (currentPage < Math.ceil(employees.length / employeesPerPage)) {
       setCurrentPage(currentPage + 1);
@@ -38,6 +40,7 @@ const Pagination = () => {
       setCurrentPage(currentPage - 1);
     }
   };
+ 
 
   return (
     <div className="container">
@@ -74,7 +77,7 @@ const Pagination = () => {
         >
           Previous
         </button>
-        <span data-testid="current-page">Page {currentPage} of {Math.ceil(employees.length / employeesPerPage)}</span>
+       <span data-testid="current-page">Page {currentPage} of {totalPages}</span>
         <button
           onClick={nextPage}
           disabled={currentPage === Math.ceil(employees.length / employeesPerPage)}
